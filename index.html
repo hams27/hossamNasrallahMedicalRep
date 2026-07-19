@@ -1,1 +1,1026 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>حسام نصرالله — مندوب طبي</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --emerald:#00d68f;
+  --emerald-dim:#00a36b;
+  --emerald-glow:rgba(0,214,143,0.15);
+  --bg:#080c0e;
+  --bg2:#0d1417;
+  --bg3:#111920;
+  --card:#121c22;
+  --card2:#16222b;
+  --border:rgba(0,214,143,0.12);
+  --border2:rgba(0,214,143,0.25);
+  --text:#e8f0ec;
+  --text2:#8fa89b;
+  --text3:#5a7068;
+}
 
+html{scroll-behavior:smooth}
+
+body{
+  font-family:'Cairo',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  overflow-x:hidden;
+}
+
+/* ════ NOISE TEXTURE ════ */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;opacity:.4;
+}
+
+/* ════ NAV ════ */
+nav{
+  position:fixed;top:0;width:100%;
+  background:rgba(8,12,14,0.85);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  padding:1rem 2.5rem;
+  display:flex;justify-content:space-between;align-items:center;
+  z-index:1000;
+  transition:all .3s;
+}
+nav.scrolled{background:rgba(8,12,14,0.97);box-shadow:0 4px 30px rgba(0,0,0,.5)}
+.logo{
+  font-size:1.4rem;font-weight:900;
+  color:var(--emerald);
+  letter-spacing:1px;
+  text-shadow:0 0 20px rgba(0,214,143,.4);
+}
+nav ul{display:flex;list-style:none;gap:2rem}
+nav a{
+  text-decoration:none;color:var(--text2);
+  font-weight:600;font-size:.9rem;
+  transition:color .3s;position:relative;
+}
+nav a::after{
+  content:'';position:absolute;bottom:-4px;right:0;
+  width:0;height:2px;background:var(--emerald);
+  transition:width .3s;border-radius:2px;
+}
+nav a:hover{color:var(--emerald)}
+nav a:hover::after{width:100%}
+
+/* hamburger */
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;background:none;border:none;z-index:1100}
+.hamburger span{display:block;width:24px;height:2px;background:var(--emerald);border-radius:2px;transition:all .35s;transform-origin:center}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* ════ HERO ════ */
+.hero{
+  min-height:100vh;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  align-items:center;
+  gap:0;
+  padding-top:70px;
+  position:relative;
+  overflow:hidden;
+}
+
+/* Animated background orbs */
+.hero::before{
+  content:'';
+  position:absolute;
+  top:-20%;right:-10%;
+  width:600px;height:600px;
+  background:radial-gradient(circle,rgba(0,214,143,.08) 0%,transparent 70%);
+  border-radius:50%;
+  animation:float 8s ease-in-out infinite;
+  pointer-events:none;
+}
+.hero::after{
+  content:'';
+  position:absolute;
+  bottom:-20%;left:-10%;
+  width:500px;height:500px;
+  background:radial-gradient(circle,rgba(0,214,143,.05) 0%,transparent 70%);
+  border-radius:50%;
+  animation:float 10s ease-in-out infinite reverse;
+  pointer-events:none;
+}
+@keyframes float{
+  0%,100%{transform:translateY(0) scale(1)}
+  50%{transform:translateY(-30px) scale(1.05)}
+}
+
+.hero-text{
+  padding:4rem 3rem 4rem 4rem;
+  position:relative;z-index:2;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:.5rem;
+  border:1px solid var(--border2);
+  background:var(--emerald-glow);
+  color:var(--emerald);
+  padding:.4rem 1.1rem;
+  border-radius:30px;
+  font-size:.8rem;font-weight:700;
+  letter-spacing:1.5px;text-transform:uppercase;
+  margin-bottom:1.8rem;
+  animation:fadeUp .8s ease both;
+}
+.hero-badge .dot{
+  width:7px;height:7px;
+  background:var(--emerald);border-radius:50%;
+  animation:pulse-dot 2s infinite;
+}
+@keyframes pulse-dot{
+  0%,100%{box-shadow:0 0 0 0 rgba(0,214,143,.4)}
+  50%{box-shadow:0 0 0 5px rgba(0,214,143,0)}
+}
+.hero-text h1{
+  font-size:3.5rem;font-weight:900;
+  line-height:1.15;
+  margin-bottom:.5rem;
+  animation:fadeUp .8s .1s ease both;
+}
+.hero-text h1 .em{
+  color:var(--emerald);
+  text-shadow:0 0 40px rgba(0,214,143,.3);
+}
+.hero-tagline{
+  font-size:1.05rem;color:var(--text2);
+  margin-bottom:1.8rem;font-weight:400;
+  animation:fadeUp .8s .2s ease both;
+}
+.hero-summary{
+  font-size:.95rem;color:var(--text2);
+  line-height:1.9;
+  max-width:500px;
+  margin-bottom:2rem;
+  border-right:3px solid var(--emerald);
+  padding-right:1.2rem;
+  animation:fadeUp .8s .3s ease both;
+}
+
+.hero-contact{
+  display:flex;flex-direction:column;gap:.6rem;
+  margin-bottom:2.2rem;
+  animation:fadeUp .8s .4s ease both;
+}
+.contact-item{
+  display:flex;align-items:center;gap:.7rem;
+  color:var(--text2);font-size:.88rem;
+}
+.contact-item .icon{color:var(--emerald);font-size:1rem}
+
+.hero-cta{
+  display:flex;gap:1rem;flex-wrap:wrap;
+  animation:fadeUp .8s .5s ease both;
+}
+.btn{
+  padding:.85rem 2rem;border-radius:8px;
+  font-size:.92rem;font-weight:700;
+  cursor:pointer;transition:all .3s;
+  text-decoration:none;border:none;
+  font-family:'Cairo',sans-serif;
+}
+.btn-primary{
+  background:var(--emerald);color:#080c0e;
+  box-shadow:0 0 30px rgba(0,214,143,.3);
+}
+.btn-primary:hover{
+  background:#00f0a0;transform:translateY(-2px);
+  box-shadow:0 0 40px rgba(0,214,143,.5);
+}
+.btn-ghost{
+  background:transparent;color:var(--emerald);
+  border:1.5px solid var(--border2);
+}
+.btn-ghost:hover{background:var(--emerald-glow);border-color:var(--emerald)}
+
+/* Hero right - photo visual */
+.hero-visual{
+  position:relative;z-index:2;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:4rem 3rem 4rem 2rem;
+  gap:1.5rem;
+}
+
+/* Floating glow blob behind photo */
+.hero-visual::before{
+  content:'';
+  position:absolute;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  width:340px;height:420px;
+  background:radial-gradient(ellipse,rgba(0,214,143,.13) 0%,transparent 70%);
+  border-radius:50%;
+  pointer-events:none;
+  animation:float 6s ease-in-out infinite;
+}
+
+.photo-frame{
+  width:280px;
+  height:360px;
+  border-radius:24px;
+  border:2px solid var(--border2);
+  box-shadow:
+    0 0 0 6px rgba(0,214,143,.06),
+    0 20px 60px rgba(0,0,0,.5),
+    0 0 40px rgba(0,214,143,.15);
+  overflow:hidden;
+  background:var(--card);
+  display:flex;align-items:center;justify-content:center;
+  animation:photoFloat 6s ease-in-out infinite;
+  flex-shrink:0;
+  position:relative;
+}
+.photo-frame::after{
+  content:'';
+  position:absolute;inset:0;
+  border-radius:24px;
+  border:1px solid rgba(255,255,255,.06);
+  pointer-events:none;
+  z-index:2;
+}
+@keyframes photoFloat{
+  0%,100%{transform:translateY(0px) rotate(-1deg)}
+  50%{transform:translateY(-14px) rotate(1deg)}
+}
+.photo-frame img{
+  width:100%;height:100%;
+  object-fit:cover;
+  object-position:top center;
+  display:block;
+  filter:brightness(1.02) contrast(1.03);
+}
+.photo-frame .placeholder-icon{
+  font-size:4rem;
+  opacity:.4;
+}
+
+.stats-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:1rem;
+  width:100%;
+  max-width:360px;
+  animation:fadeUp .8s .4s ease both;
+}
+.stat-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:1.3rem 1rem;
+  text-align:center;
+  transition:all .3s;
+  position:relative;
+  overflow:hidden;
+}
+.stat-card::before{
+  content:'';position:absolute;top:0;right:0;
+  width:100%;height:2px;
+  background:linear-gradient(90deg,transparent,var(--emerald),transparent);
+  opacity:0;transition:opacity .3s;
+}
+.stat-card:hover{border-color:var(--border2);transform:translateY(-4px);box-shadow:0 10px 30px rgba(0,214,143,.1)}
+.stat-card:hover::before{opacity:1}
+.stat-num{font-size:2rem;font-weight:900;color:var(--emerald);line-height:1}
+.stat-lbl{font-size:.75rem;color:var(--text3);margin-top:.3rem;font-weight:600}
+
+/* ════ SECTION BASE ════ */
+section{padding:100px 2rem;position:relative}
+.container{max-width:1200px;margin:0 auto}
+.section-label{
+  display:inline-flex;align-items:center;gap:.5rem;
+  color:var(--emerald);font-size:.78rem;font-weight:700;
+  letter-spacing:2px;text-transform:uppercase;
+  margin-bottom:1rem;
+}
+.section-label::before{content:'';display:block;width:24px;height:2px;background:var(--emerald)}
+.section-title{
+  font-size:2.4rem;font-weight:900;
+  color:var(--text);
+  margin-bottom:.8rem;
+  line-height:1.2;
+}
+.section-title span{color:var(--emerald)}
+.section-sub{color:var(--text2);font-size:1rem;max-width:600px;line-height:1.8;margin-bottom:3.5rem}
+
+/* ════ EXPERIENCE TIMELINE ════ */
+.exp-section{background:var(--bg2)}
+.timeline{position:relative;padding-right:2rem}
+.timeline::before{
+  content:'';position:absolute;
+  right:0;top:0;bottom:0;
+  width:2px;
+  background:linear-gradient(180deg,var(--emerald),transparent);
+  border-radius:2px;
+}
+.timeline-item{
+  position:relative;
+  padding:0 2.5rem 3rem 0;
+  opacity:0;transform:translateX(30px);
+  transition:all .6s ease;
+}
+.timeline-item.visible{opacity:1;transform:translateX(0)}
+.timeline-item::before{
+  content:'';position:absolute;
+  right:-6px;top:6px;
+  width:14px;height:14px;
+  background:var(--emerald);border-radius:50%;
+  box-shadow:0 0 15px rgba(0,214,143,.5);
+}
+.timeline-dot-year{
+  position:absolute;right:20px;top:2px;
+  font-size:.75rem;color:var(--emerald);font-weight:700;
+  letter-spacing:1px;white-space:nowrap;
+}
+.timeline-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:1.8rem;
+  transition:all .3s;
+}
+.timeline-card:hover{border-color:var(--border2);box-shadow:0 8px 30px rgba(0,214,143,.08)}
+.tl-header{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:.5rem;margin-bottom:.5rem}
+.tl-title{font-size:1.1rem;font-weight:800;color:var(--text)}
+.tl-badge{
+  background:var(--emerald-glow);color:var(--emerald);
+  border:1px solid var(--border2);
+  padding:.25rem .8rem;border-radius:20px;
+  font-size:.75rem;font-weight:700;white-space:nowrap;
+}
+.tl-company{color:var(--emerald);font-size:.9rem;font-weight:600;margin-bottom:.3rem}
+.tl-location{color:var(--text3);font-size:.82rem;margin-bottom:1rem}
+.tl-bullets{list-style:none;display:flex;flex-direction:column;gap:.55rem}
+.tl-bullets li{
+  color:var(--text2);font-size:.88rem;line-height:1.7;
+  padding-right:1.2rem;position:relative;
+}
+.tl-bullets li::before{
+  content:'▸';position:absolute;right:0;
+  color:var(--emerald);font-size:.8rem;top:.1rem;
+}
+.tl-bullets li strong{color:var(--emerald)}
+
+/* ════ SKILLS ════ */
+.skills-section{background:var(--bg)}
+.skills-wrap{display:grid;grid-template-columns:1fr 1fr;gap:2rem}
+.skill-group{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:16px;padding:2rem;
+  transition:all .3s;
+}
+.skill-group:hover{border-color:var(--border2)}
+.skill-group-title{
+  font-size:1rem;font-weight:800;color:var(--text);
+  margin-bottom:1.5rem;display:flex;align-items:center;gap:.6rem;
+}
+.skill-group-title .g-icon{font-size:1.2rem}
+.skill-tags{display:flex;flex-wrap:wrap;gap:.6rem}
+.skill-tag{
+  background:var(--bg3);border:1px solid var(--border);
+  color:var(--text2);
+  padding:.4rem .9rem;border-radius:20px;
+  font-size:.82rem;font-weight:600;
+  transition:all .3s;cursor:default;
+}
+.skill-tag:hover{background:var(--emerald-glow);border-color:var(--border2);color:var(--emerald)}
+
+/* Language bars */
+.lang-item{margin-bottom:1.2rem}
+.lang-top{display:flex;justify-content:space-between;margin-bottom:.4rem}
+.lang-name{font-size:.9rem;font-weight:700;color:var(--text)}
+.lang-level{font-size:.8rem;color:var(--text3)}
+.lang-bar{height:4px;background:var(--bg3);border-radius:4px;overflow:hidden}
+.lang-fill{height:100%;background:linear-gradient(90deg,var(--emerald-dim),var(--emerald));border-radius:4px;width:0;transition:width 1.2s ease}
+
+/* ════ ACHIEVEMENTS ════ */
+.achieve-section{background:var(--bg2)}
+.achieve-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:1.5rem;
+}
+.achieve-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:16px;padding:2rem;
+  text-align:center;
+  transition:all .3s;
+  position:relative;overflow:hidden;
+  opacity:0;transform:translateY(20px);
+  transition:opacity .6s ease,transform .6s ease,border-color .3s,box-shadow .3s;
+}
+.achieve-card.visible{opacity:1;transform:translateY(0)}
+.achieve-card::after{
+  content:'';position:absolute;
+  bottom:0;right:0;left:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--emerald),transparent);
+  opacity:0;transition:opacity .3s;
+}
+.achieve-card:hover{border-color:var(--border2);box-shadow:0 12px 40px rgba(0,214,143,.1)}
+.achieve-card:hover::after{opacity:1}
+.achieve-icon{font-size:2.2rem;margin-bottom:1rem;display:block}
+.achieve-num{font-size:2.5rem;font-weight:900;color:var(--emerald);line-height:1}
+.achieve-title{font-size:.95rem;font-weight:700;color:var(--text);margin:.4rem 0}
+.achieve-desc{font-size:.82rem;color:var(--text2);line-height:1.7}
+
+/* ════ CERTS ════ */
+.certs-section{background:var(--bg)}
+.certs-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:1.2rem;
+}
+.cert-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:12px;
+  padding:1.2rem 1.5rem;
+  display:flex;align-items:center;gap:1rem;
+  transition:all .3s;
+}
+.cert-card:hover{border-color:var(--border2);transform:translateX(-4px)}
+.cert-icon{
+  width:42px;height:42px;flex-shrink:0;
+  background:var(--emerald-glow);border:1px solid var(--border2);
+  border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;
+}
+.cert-name{font-size:.88rem;font-weight:700;color:var(--text);margin-bottom:.2rem}
+.cert-date{font-size:.76rem;color:var(--text3);font-weight:600}
+
+/* ════ CONTACT ════ */
+.contact-section{
+  background:var(--bg2);
+  text-align:center;
+}
+.contact-inner{
+  max-width:700px;margin:0 auto;
+}
+.contact-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:1rem;
+  margin-top:3rem;
+}
+.contact-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:14px;padding:1.5rem 1rem;
+  text-decoration:none;
+  transition:all .3s;
+  display:flex;flex-direction:column;align-items:center;gap:.6rem;
+}
+.contact-card:hover{border-color:var(--emerald);background:var(--emerald-glow);transform:translateY(-4px);box-shadow:0 10px 30px rgba(0,214,143,.15)}
+.contact-card .c-icon{font-size:1.6rem}
+.contact-card .c-label{font-size:.75rem;color:var(--text3);font-weight:700;text-transform:uppercase;letter-spacing:1px}
+.contact-card .c-val{font-size:.88rem;color:var(--text);font-weight:600}
+
+/* ════ FOOTER ════ */
+footer{
+  background:var(--bg);
+  border-top:1px solid var(--border);
+  padding:1.5rem;
+  text-align:center;
+  color:var(--text3);font-size:.82rem;
+}
+
+/* ════ ANIMATIONS ════ */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(24px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@keyframes fadeIn{
+  from{opacity:0}to{opacity:1}
+}
+
+/* ════ RESPONSIVE ════ */
+
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr}
+  .hero-text{padding:4rem 2rem 2rem}
+  .hero-visual{padding:1rem 2rem 3rem}
+  .photo-frame{width:240px;height:300px}
+  .hero-text h1{font-size:2.6rem}
+  .skills-wrap{grid-template-columns:1fr}
+}
+/* ════ LANG TOGGLE ════ */
+.lang-switch{
+  display:flex;align-items:center;gap:0;
+  border:1px solid var(--border2);
+  border-radius:20px;overflow:hidden;
+  margin-inline-start:1rem;
+}
+.lang-switch button{
+  background:transparent;border:none;
+  color:var(--text2);font-family:'Cairo',sans-serif;
+  font-size:.78rem;font-weight:700;
+  padding:.4rem .9rem;cursor:pointer;
+  transition:all .3s;
+}
+.lang-switch button.active{background:var(--emerald);color:#080c0e}
+
+/* ════ ENGLISH / LTR OVERRIDES ════ */
+body.lang-en{direction:ltr}
+body.lang-en .hero-summary{border-right:none;border-left:3px solid var(--emerald);padding-right:0;padding-left:1.2rem}
+body.lang-en .timeline{padding-right:0;padding-left:2rem}
+body.lang-en .timeline::before{right:auto;left:0}
+body.lang-en .timeline-item{padding:0 0 3rem 2.5rem}
+body.lang-en .timeline-item::before{right:auto;left:-6px}
+body.lang-en .timeline-dot-year{right:auto;left:20px}
+body.lang-en .tl-bullets li{padding-right:0;padding-left:1.2rem}
+body.lang-en .tl-bullets li::before{right:auto;left:0}
+body.lang-en .cert-card:hover{transform:translateX(4px)}
+body.lang-en nav a::after{right:auto;left:0}
+
+@media(max-width:768px){
+  nav{flex-wrap:wrap;padding:1rem 1.5rem}
+  .hamburger{display:flex}
+  nav ul{
+    display:none;flex-direction:column;width:100%;
+    gap:0;padding:.5rem 0 1rem;
+    border-top:1px solid var(--border);
+    animation:fadeIn .3s ease;
+  }
+  nav ul.open{display:flex}
+  nav ul li a{display:block;padding:.75rem .5rem;border-bottom:1px solid var(--border)}
+  .hero-text h1{font-size:2.1rem}
+  .section-title{font-size:1.9rem}
+  .stats-grid{grid-template-columns:1fr 1fr}
+  .timeline{padding-right:1.2rem}
+  .tl-header{flex-direction:column}
+  .photo-frame{width:200px;height:260px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="logo" data-ar="حسام نصرالله." data-en="Hossam Nasrallah.">حسام نصرالله.</div>
+  <button class="hamburger" id="hamburger" aria-label="القائمة">
+    <span></span><span></span><span></span>
+  </button>
+  <ul id="navMenu">
+    <li><a href="#experience" data-ar="الخبرة" data-en="Experience">الخبرة</a></li>
+    <li><a href="#skills" data-ar="المهارات" data-en="Skills">المهارات</a></li>
+    <li><a href="#achievements" data-ar="الإنجازات" data-en="Achievements">الإنجازات</a></li>
+    <li><a href="#certs" data-ar="الشهادات" data-en="Certifications">الشهادات</a></li>
+    <li><a href="#contact" data-ar="تواصل" data-en="Contact">تواصل</a></li>
+    <li><div class="lang-switch"><button id="btnAr" class="active">AR</button><button id="btnEn">EN</button></div></li>
+  </ul>
+</nav>
+
+<!-- ══════════════ HERO ══════════════ -->
+<section class="hero">
+  <div class="hero-text">
+    <div class="hero-badge">
+      <span class="dot"></span>
+      Medical Representative
+    </div>
+    <h1 data-ar-html="حسام<br><span class=&quot;em&quot;>نصرالله</span>" data-en-html="Hossam<br><span class=&quot;em&quot;>Nasrallah</span>">حسام<br> <br><span class="em">نصرالله</span></h1>
+    <p class="hero-tagline" data-ar="مندوب طبي | الزقازيق، مصر" data-en="Medical Representative | Zagazig, Egypt">مندوب طبي | الزقازيق، مصر</p>
+    <p class="hero-summary" data-ar="مندوب طبي بخبرة +5 سنوات في المبيعات الصيدلانية وعلاقات العملاء، يتجاوز الأهداف البيعية بنسبة 20% ويوسّع إيرادات المنطقة 30% سنوياً. يمتلك خلفية قوية في الموارد البشرية وتحليل البيانات وبناء علاقات مهنية متينة مع المختصين الصحيين." data-en="Results-driven Medical Representative with 5+ years of experience in pharmaceutical sales and client relations, consistently exceeding sales quotas by 20% and expanding territory revenue by 30% year-over-year. Brings a strong background in HR, data analysis, and building lasting professional relationships with healthcare professionals.">
+      مندوب طبي بخبرة +5 سنوات في المبيعات الصيدلانية وعلاقات العملاء، يتجاوز الأهداف البيعية بنسبة 20% ويوسّع إيرادات المنطقة 30% سنوياً. يمتلك خلفية قوية في الموارد البشرية وتحليل البيانات وبناء علاقات مهنية متينة مع المختصين الصحيين.
+    </p>
+    <div class="hero-contact">
+      <div class="contact-item"><span class="icon">📞</span><span>+20 127 638 8372</span></div>
+      <div class="contact-item"><span class="icon">📧</span><span>hossamnaseralla20@gmail.com</span></div>
+      <div class="contact-item"><span class="icon">📍</span><span data-ar="الزقازيق، مصر" data-en="Zagazig, Egypt">الزقازيق، مصر</span></div>
+      <div class="contact-item"><span class="icon">🎓</span><span data-ar="بكالوريوس آداب — علم النفس — جامعة الزقازيق" data-en="BA in Psychology — Zagazig University">بكالوريوس آداب — علم النفس — جامعة الزقازيق</span></div>
+    </div>
+    <div class="hero-cta">
+      <a href="tel:+201276388372" class="btn btn-primary" data-ar="📞 اتصل بي الآن" data-en="📞 Call Me Now">📞 اتصل بي الآن</a>
+      <a href="mailto:hossamnaseralla20@gmail.com" class="btn btn-ghost" data-ar="📧 راسلني" data-en="📧 Email Me">📧 راسلني</a>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="photo-frame">
+      <img src="hossamNasrallah.jpeg" alt="حسام نصرالله"
+           onerror="this.style.display='none';document.getElementById('ph').style.display='flex'">
+      <div id="ph" class="placeholder-icon" style="display:none;align-items:center;justify-content:center;width:100%;height:100%">🧑‍💼</div>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-num">5+</div>
+        <div class="stat-lbl" data-ar="سنوات خبرة" data-en="Years Experience">سنوات خبرة</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">20%</div>
+        <div class="stat-lbl" data-ar="تجاوز الأهداف" data-en="Target Excess">تجاوز الأهداف</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">30%</div>
+        <div class="stat-lbl" data-ar="نمو الإيرادات" data-en="Revenue Growth">نمو الإيرادات</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">95%</div>
+        <div class="stat-lbl" data-ar="رضا العملاء" data-en="Client Satisfaction">رضا العملاء</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ EXPERIENCE ══════════════ -->
+<section class="exp-section" id="experience">
+  <div class="container">
+    <div class="section-label" data-ar="المسيرة المهنية" data-en="Career Journey">المسيرة المهنية</div>
+    <h2 class="section-title" data-ar-html="الخبرة <span>العملية</span>" data-en-html="Work <span>Experience</span>">الخبرة <span>العملية</span></h2>
+    <p class="section-sub" data-ar="مسيرة ممتدة من 2018 حتى الآن عبر بيئات صيدلانية وإدارية متنوعة" data-en="A career spanning from 2018 to present across diverse pharmaceutical and administrative environments">مسيرة ممتدة من 2018 حتى الآن عبر بيئات صيدلانية وإدارية متنوعة</p>
+
+    <div class="timeline">
+
+      <!-- Job 1 -->
+      <div class="timeline-item">
+        <div class="timeline-dot-year" data-ar="2023 — حتى الآن" data-en="2023 — Present">2023 — حتى الآن</div>
+        <div class="timeline-card">
+          <div class="tl-header">
+            <div class="tl-title" data-ar="مندوب طبي" data-en="Medical Representative">مندوب طبي</div>
+            <div class="tl-badge" data-ar="الأحدث" data-en="Latest">الأحدث</div>
+          </div>
+          <div class="tl-company">Meroza Pharma</div>
+          <div class="tl-location" data-ar="📍 الزقازيق، مصر" data-en="📍 Zagazig, Egypt">📍 الزقازيق، مصر</div>
+          <ul class="tl-bullets">
+            <li data-ar-html="تجاوز الحصص البيعية باستمرار بنسبة <strong>20%</strong> وتوسيع إيرادات المنطقة <strong>30%</strong> سنوياً" data-en-html="Consistently exceeded sales quotas by <strong>20%</strong> and expanded territory revenue by <strong>30%</strong> year-over-year">تجاوز الحصص البيعية باستمرار بنسبة <strong>20%</strong> وتوسيع إيرادات المنطقة <strong>30%</strong> سنوياً</li>
+            <li data-ar="بناء علاقات قوية مع المختصين الصحيين وتقديم عروض تقديمية مؤثرة للمنتجات" data-en="Built strong relationships with healthcare professionals and delivered impactful product presentations">بناء علاقات قوية مع المختصين الصحيين وتقديم عروض تقديمية مؤثرة للمنتجات</li>
+            <li data-ar="رفع معدلات وصف الأدوية المروَّجة عبر التواصل المستمر والمتابعة الميدانية" data-en="Increased prescription rates for promoted drugs through consistent outreach and field follow-up">رفع معدلات وصف الأدوية المروَّجة عبر التواصل المستمر والمتابعة الميدانية</li>
+            <li data-ar-html="الاستفادة من تحليل البيانات ورؤى السوق لتحديد فرص جديدة، ما رفع اكتساب العملاء <strong>25%</strong>" data-en-html="Leveraged data analytics and market insights to identify new opportunities, increasing client acquisition by <strong>25%</strong>">الاستفادة من تحليل البيانات ورؤى السوق لتحديد فرص جديدة، ما رفع اكتساب العملاء <strong>25%</strong></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Job 2 -->
+      <div class="timeline-item">
+        <div class="timeline-dot-year" data-ar="2022 — 2023" data-en="2022 — 2023">2022 — 2023</div>
+        <div class="timeline-card">
+          <div class="tl-header">
+            <div class="tl-title" data-ar="أخصائي موارد بشرية" data-en="HR Specialist">أخصائي موارد بشرية</div>
+            <div class="tl-badge">HR Specialist</div>
+          </div>
+          <div class="tl-company">Meroza Pharma</div>
+          <div class="tl-location" data-ar="📍 الزقازيق، مصر" data-en="📍 Zagazig, Egypt">📍 الزقازيق، مصر</div>
+          <ul class="tl-bullets">
+            <li data-ar-html="إدارة دورة التوظيف الكاملة وشغل <strong>+40 وظيفة</strong> في سوق تنافسي مع تقليل وقت التعيين <strong>25%</strong>" data-en-html="Coordinated end-to-end recruitment, filling <strong>40+ positions</strong> in a competitive market while reducing time-to-hire by <strong>25%</strong>">إدارة دورة التوظيف الكاملة وشغل <strong>+40 وظيفة</strong> في سوق تنافسي مع تقليل وقت التعيين <strong>25%</strong></li>
+            <li data-ar-html="تطوير برامج التأهيل والتدريب مما رفع معدل الاحتفاظ بالموظفين الجدد <strong>20%</strong>" data-en-html="Implemented onboarding and training programs, improving new hire retention by <strong>20%</strong>">تطوير برامج التأهيل والتدريب مما رفع معدل الاحتفاظ بالموظفين الجدد <strong>20%</strong></li>
+            <li data-ar-html="إدارة دورات الأداء والمزايا لفريق <strong>+100 موظف</strong> ورفع رضاهم الوظيفي <strong>15%</strong>" data-en-html="Led benefits administration and performance reviews for a team of <strong>100+ employees</strong>, boosting satisfaction by <strong>15%</strong>">إدارة دورات الأداء والمزايا لفريق <strong>+100 موظف</strong> ورفع رضاهم الوظيفي <strong>15%</strong></li>
+            <li data-ar-html="الشراكة مع مديري الأقسام لتحديد الفجوات الوظيفية وخفض معدل دوران العمالة <strong>10%</strong>" data-en-html="Partnered with department managers on workforce planning, reducing turnover by <strong>10%</strong>">الشراكة مع مديري الأقسام لتحديد الفجوات الوظيفية وخفض معدل دوران العمالة <strong>10%</strong></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Job 3 -->
+      <div class="timeline-item">
+        <div class="timeline-dot-year" data-ar="2021 — 2022" data-en="2021 — 2022">2021 — 2022</div>
+        <div class="timeline-card">
+          <div class="tl-header">
+            <div class="tl-title" data-ar="منسق بيانات إداري" data-en="Administrative Data Coordinator">منسق بيانات إداري</div>
+            <div class="tl-badge">Data Coordinator</div>
+          </div>
+          <div class="tl-company">Meroza Pharma</div>
+          <div class="tl-location" data-ar="📍 الزقازيق، مصر" data-en="📍 Zagazig, Egypt">📍 الزقازيق، مصر</div>
+          <ul class="tl-bullets">
+            <li data-ar="تحديث جداول Excel وGoogle Drive لضمان دقة البيانات وتنظيمها باستمرار" data-en="Maintained and updated Excel spreadsheets and Google Drive folders to keep data accurate and organized">تحديث جداول Excel وGoogle Drive لضمان دقة البيانات وتنظيمها باستمرار</li>
+            <li data-ar="إدارة الحسابات الإلكترونية للشركة بما فيها الموقع الإلكتروني وملفات العملاء" data-en="Managed company online accounts, including website administration and client profile updates">إدارة الحسابات الإلكترونية للشركة بما فيها الموقع الإلكتروني وملفات العملاء</li>
+            <li data-ar="التعامل مع معلومات العملاء السرية وضمان حمايتها في كل الأوقات" data-en="Handled sensitive client information, ensuring data protection and confidentiality at all times">التعامل مع معلومات العملاء السرية وضمان حمايتها في كل الأوقات</li>
+            <li data-ar="دعم إدخال البيانات والتنسيق بين العملاء والفرق الداخلية" data-en="Provided support in data entry and coordination between clients and internal teams">دعم إدخال البيانات والتنسيق بين العملاء والفرق الداخلية</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Job 4 -->
+      <div class="timeline-item">
+        <div class="timeline-dot-year" data-ar="2020 — 2021" data-en="2020 — 2021">2020 — 2021</div>
+        <div class="timeline-card">
+          <div class="tl-header">
+            <div class="tl-title" data-ar="مساعد صيدلاني" data-en="Pharmacist Assistant">مساعد صيدلاني</div>
+          </div>
+          <div class="tl-company" data-ar="صيدليات إيزابي — ElEzaby Pharmacy" data-en="ElEzaby Pharmacy">صيدليات إيزابي — ElEzaby Pharmacy</div>
+          <div class="tl-location" data-ar="📍 الزقازيق، مصر" data-en="📍 Zagazig, Egypt">📍 الزقازيق، مصر</div>
+          <ul class="tl-bullets">
+            <li data-ar-html="صرف <strong>+150 وصفة يومياً</strong> بدقة 100% والتزام كامل بالإرشادات الطبية" data-en-html="Dispensed <strong>150+ prescriptions daily</strong> with 100% accuracy and full adherence to medical guidelines">صرف <strong>+150 وصفة يومياً</strong> بدقة 100% والتزام كامل بالإرشادات الطبية</li>
+            <li data-ar-html="تقديم إرشادات الدواء لـ <strong>+73 مريض يومياً</strong> وتحسين معدلات الالتزام بالعلاج" data-en-html="Counseled <strong>73+ patients daily</strong> on medication usage, improving treatment compliance">تقديم إرشادات الدواء لـ <strong>+73 مريض يومياً</strong> وتحسين معدلات الالتزام بالعلاج</li>
+            <li data-ar-html="إدارة مخزون <strong>+2,000 صنف دوائي</strong> وتقليل نقص المخزون بنسبة <strong>15%</strong>" data-en-html="Managed inventory of <strong>2,000+ medication items</strong>, reducing stock shortages by <strong>15%</strong>">إدارة مخزون <strong>+2,000 صنف دوائي</strong> وتقليل نقص المخزون بنسبة <strong>15%</strong></li>
+            <li data-ar-html="معالجة مطالبات التأمين والسجلات بمعدل خطأ <strong>2% فقط</strong> — رفع كفاءة العمل ورضا العملاء" data-en-html="Processed insurance claims and records with only a <strong>2% error rate</strong> — boosting workflow efficiency and customer satisfaction">معالجة مطالبات التأمين والسجلات بمعدل خطأ <strong>2% فقط</strong> — رفع كفاءة العمل ورضا العملاء</li>
+            <li data-ar-html="التنسيق مع فريق من <strong>+10 صيادلة ومساعدين</strong> وتقليل وقت انتظار المرضى 20%" data-en-html="Collaborated with a team of <strong>10+ pharmacists and assistants</strong>, reducing patient wait times by 20%">التنسيق مع فريق من <strong>+10 صيادلة ومساعدين</strong> وتقليل وقت انتظار المرضى 20%</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Job 5 -->
+      <div class="timeline-item">
+        <div class="timeline-dot-year" data-ar="2018 — 2020" data-en="2018 — 2020">2018 — 2020</div>
+        <div class="timeline-card">
+          <div class="tl-header">
+            <div class="tl-title" data-ar="مساعد صيدلاني" data-en="Pharmacist Assistant">مساعد صيدلاني</div>
+            <div class="tl-badge" data-ar="البداية" data-en="Beginning">البداية</div>
+          </div>
+          <div class="tl-company" data-ar="الرحمن فارماسي — Al-Rahman Pharmacy" data-en="Al-Rahman Pharmacy">الرحمن فارماسي — Al-Rahman Pharmacy</div>
+          <div class="tl-location" data-ar="📍 الزقازيق، مصر" data-en="📍 Zagazig, Egypt">📍 الزقازيق، مصر</div>
+          <ul class="tl-bullets">
+            <li data-ar-html="صرف <strong>~150 وصفة يومياً</strong> بدقة وامتثال كاملين للوائح الصيدلانية" data-en-html="Dispensed <strong>~150 prescriptions daily</strong> with accuracy and full compliance with pharmacy regulations">صرف <strong>~150 وصفة يومياً</strong> بدقة وامتثال كاملين للوائح الصيدلانية</li>
+            <li data-ar-html="تقديم استشارات الدواء لـ <strong>+50 عميل يومياً</strong> بتقييم رضا <strong>95%</strong>" data-en-html="Provided medication counseling to <strong>50+ customers daily</strong> with a <strong>95%</strong> satisfaction rating">تقديم استشارات الدواء لـ <strong>+50 عميل يومياً</strong> بتقييم رضا <strong>95%</strong></li>
+            <li data-ar-html="إدارة المخزون وتقليل نقص الأدوية <strong>30%</strong> عبر تحسين دوران المخزون" data-en-html="Managed inventory processes, reducing medication shortages by <strong>30%</strong> through optimized stock rotation">إدارة المخزون وتقليل نقص الأدوية <strong>30%</strong> عبر تحسين دوران المخزون</li>
+            <li data-ar-html="تطبيق إجراءات ضبط الجودة مع الصيادلة وتقليل أخطاء الصرف <strong>20%</strong>" data-en-html="Implemented quality control measures with pharmacists, reducing dispensing errors by <strong>20%</strong>">تطبيق إجراءات ضبط الجودة مع الصيادلة وتقليل أخطاء الصرف <strong>20%</strong></li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ SKILLS ══════════════ -->
+<section class="skills-section" id="skills">
+  <div class="container">
+    <div class="section-label" data-ar="الكفاءات" data-en="Competencies">الكفاءات</div>
+    <h2 class="section-title" data-ar-html="المهارات <span>والقدرات</span>" data-en-html="Skills <span>&amp; Capabilities</span>">المهارات <span>والقدرات</span></h2>
+    <p class="section-sub" data-ar="مزيج من المهارات الصيدلانية والإدارية والتواصلية المكتسبة من 5+ سنوات" data-en="A blend of pharmaceutical, administrative, and communication skills built over 5+ years">مزيج من المهارات الصيدلانية والإدارية والتواصلية المكتسبة من 5+ سنوات</p>
+
+    <div class="skills-wrap">
+      <div class="skill-group">
+        <div class="skill-group-title"><span class="g-icon">💬</span><span data-ar="المهارات الشخصية" data-en="Soft Skills">المهارات الشخصية</span></div>
+        <div class="skill-tags">
+          <span class="skill-tag" data-ar="التواصل الفعّال" data-en="Communication">التواصل الفعّال</span>
+          <span class="skill-tag" data-ar="المبيعات" data-en="Sales">المبيعات</span>
+          <span class="skill-tag" data-ar="حل المشكلات" data-en="Problem-Solving">حل المشكلات</span>
+          <span class="skill-tag" data-ar="القيادة" data-en="Leadership">القيادة</span>
+          <span class="skill-tag" data-ar="الإبداع" data-en="Creativity">الإبداع</span>
+          <span class="skill-tag" data-ar="تعدد المهام" data-en="Multitasking">تعدد المهام</span>
+          <span class="skill-tag" data-ar="العمل الجماعي" data-en="Teamwork">العمل الجماعي</span>
+          <span class="skill-tag" data-ar="المرونة" data-en="Flexibility">المرونة</span>
+          <span class="skill-tag" data-ar="التفاوض" data-en="Negotiation">التفاوض</span>
+          <span class="skill-tag" data-ar="تجربة المستخدم" data-en="User Experience">تجربة المستخدم</span>
+          <span class="skill-tag" data-ar="خدمة العملاء" data-en="Customer Service">خدمة العملاء</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-title"><span class="g-icon">💻</span><span data-ar="المهارات التقنية" data-en="Technical Skills">المهارات التقنية</span></div>
+        <div class="skill-tags">
+          <span class="skill-tag">Microsoft Excel</span>
+          <span class="skill-tag">Google Drive</span>
+          <span class="skill-tag">Microsoft Office</span>
+          <span class="skill-tag" data-ar="إدارة المخزون" data-en="Inventory Management">إدارة المخزون</span>
+          <span class="skill-tag" data-ar="إدارة قواعد البيانات" data-en="Database Management">إدارة قواعد البيانات</span>
+          <span class="skill-tag" data-ar="تحليل البيانات" data-en="Data Analysis">تحليل البيانات</span>
+          <span class="skill-tag" data-ar="إدارة الحسابات الإلكترونية" data-en="Online Account Management">إدارة الحسابات الإلكترونية</span>
+          <span class="skill-tag" data-ar="معالجة مطالبات التأمين" data-en="Insurance Claims Processing">معالجة مطالبات التأمين</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-title"><span class="g-icon">🌐</span><span data-ar="اللغات" data-en="Languages">اللغات</span></div>
+        <div>
+          <div class="lang-item">
+            <div class="lang-top"><span class="lang-name" data-ar="العربية" data-en="Arabic">العربية</span><span class="lang-level" data-ar="لغة أم — C2" data-en="Native — C2">لغة أم — C2</span></div>
+            <div class="lang-bar"><div class="lang-fill" data-w="100%"></div></div>
+          </div>
+          <div class="lang-item">
+            <div class="lang-top"><span class="lang-name" data-ar="الإنجليزية" data-en="English">الإنجليزية</span><span class="lang-level" data-ar="جيد — B1" data-en="Good — B1">جيد — B1</span></div>
+            <div class="lang-bar"><div class="lang-fill" data-w="55%"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-title"><span class="g-icon">🎯</span><span data-ar="مجالات التخصص" data-en="Areas of Expertise">مجالات التخصص</span></div>
+        <div class="skill-tags">
+          <span class="skill-tag" data-ar="المبيعات الصيدلانية" data-en="Pharmaceutical Sales">المبيعات الصيدلانية</span>
+          <span class="skill-tag" data-ar="التمثيل الطبي" data-en="Medical Representation">التمثيل الطبي</span>
+          <span class="skill-tag" data-ar="علاقات المختصين الصحيين" data-en="Healthcare Professional Relations">علاقات المختصين الصحيين</span>
+          <span class="skill-tag" data-ar="إدارة الموارد البشرية" data-en="HR Management">إدارة الموارد البشرية</span>
+          <span class="skill-tag" data-ar="تحليل السوق" data-en="Market Analysis">تحليل السوق</span>
+          <span class="skill-tag" data-ar="علم النفس التطبيقي" data-en="Applied Psychology">علم النفس التطبيقي</span>
+          <span class="skill-tag" data-ar="إدارة العمليات الصيدلانية" data-en="Pharmacy Operations Management">إدارة العمليات الصيدلانية</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ ACHIEVEMENTS ══════════════ -->
+<section class="achieve-section" id="achievements">
+  <div class="container">
+    <div class="section-label" data-ar="الأرقام تتكلم" data-en="Numbers Speak">الأرقام تتكلم</div>
+    <h2 class="section-title" data-ar-html="الإنجازات <span>البارزة</span>" data-en-html="Key <span>Achievements</span>">الإنجازات <span>البارزة</span></h2>
+    <p class="section-sub" data-ar="نتائج ملموسة وقابلة للقياس تعكس التأثير الحقيقي في كل دور" data-en="Tangible, measurable results reflecting real impact in every role">نتائج ملموسة وقابلة للقياس تعكس التأثير الحقيقي في كل دور</p>
+
+    <div class="achieve-grid">
+      <div class="achieve-card">
+        <span class="achieve-icon">📈</span>
+        <div class="achieve-num">20%</div>
+        <div class="achieve-title" data-ar="تجاوز الحصص البيعية" data-en="Sales Quota Excess">تجاوز الحصص البيعية</div>
+        <div class="achieve-desc" data-ar="تجاوز مستهدفات المبيعات باستمرار بنسبة 20% وتوسيع إيرادات المنطقة 30% سنوياً" data-en="Consistently exceeded sales targets by 20% and expanded territory revenue by 30% year-over-year">تجاوز مستهدفات المبيعات باستمرار بنسبة 20% وتوسيع إيرادات المنطقة 30% سنوياً</div>
+      </div>
+      <div class="achieve-card">
+        <span class="achieve-icon">💊</span>
+        <div class="achieve-num">150+</div>
+        <div class="achieve-title" data-ar="وصفة يومياً" data-en="Prescriptions Daily">وصفة يومياً</div>
+        <div class="achieve-desc" data-ar="صرف 150+ وصفة يومياً بدقة 100% في إيزابي فارما مع صفر أخطاء" data-en="Dispensed 150+ prescriptions daily with 100% accuracy at ElEzaby Pharmacy with zero errors">صرف 150+ وصفة يومياً بدقة 100% في إيزابي فارما مع صفر أخطاء</div>
+      </div>
+      <div class="achieve-card">
+        <span class="achieve-icon">🏆</span>
+        <div class="achieve-num">40+</div>
+        <div class="achieve-title" data-ar="توظيف ناجح" data-en="Successful Hires">توظيف ناجح</div>
+        <div class="achieve-desc" data-ar="شغل 40+ وظيفة في سوق تنافسي مع تقليل وقت التعيين 25%" data-en="Filled 40+ positions in a competitive market while reducing time-to-hire by 25%">شغل 40+ وظيفة في سوق تنافسي مع تقليل وقت التعيين 25%</div>
+      </div>
+      <div class="achieve-card">
+        <span class="achieve-icon">⭐</span>
+        <div class="achieve-num">95%</div>
+        <div class="achieve-title" data-ar="رضا العملاء" data-en="Client Satisfaction">رضا العملاء</div>
+        <div class="achieve-desc" data-ar="تحقيق تقييم رضا 95% من خلال الاستشارات الدوائية الاحترافية" data-en="Achieved a 95% satisfaction rating through professional medication counseling">تحقيق تقييم رضا 95% من خلال الاستشارات الدوائية الاحترافية</div>
+      </div>
+      <div class="achieve-card">
+        <span class="achieve-icon">📦</span>
+        <div class="achieve-num">30%</div>
+        <div class="achieve-title" data-ar="تقليل نقص المخزون" data-en="Shortage Reduction">تقليل نقص المخزون</div>
+        <div class="achieve-desc" data-ar="تحسين إدارة مخزون 2,000+ صنف دوائي وتقليل النقص 30% في الرحمن فارماسي" data-en="Improved management of 2,000+ medication items, cutting shortages by 30% at Al-Rahman Pharmacy">تحسين إدارة مخزون 2,000+ صنف دوائي وتقليل النقص 30% في الرحمن فارماسي</div>
+      </div>
+      <div class="achieve-card">
+        <span class="achieve-icon">👥</span>
+        <div class="achieve-num">100+</div>
+        <div class="achieve-title" data-ar="موظف تحت الإشراف" data-en="Employees Managed">موظف تحت الإشراف</div>
+        <div class="achieve-desc" data-ar="إدارة دورات الأداء والمزايا لفريق 100+ موظف ورفع رضاهم 15%" data-en="Managed performance reviews and benefits for a team of 100+ employees, boosting satisfaction by 15%">إدارة دورات الأداء والمزايا لفريق 100+ موظف ورفع رضاهم 15%</div>
+      </div>
+      <div class="achieve-card">
+        <span class="achieve-icon">🧠</span>
+        <div class="achieve-num">25%</div>
+        <div class="achieve-title" data-ar="زيادة اكتساب العملاء" data-en="Client Acquisition Growth">زيادة اكتساب العملاء</div>
+        <div class="achieve-desc" data-ar="الاستفادة من تحليل البيانات لتحديد فرص جديدة ورفع اكتساب العملاء 25%" data-en="Leveraged data analytics to identify new opportunities, growing client acquisition by 25%">الاستفادة من تحليل البيانات لتحديد فرص جديدة ورفع اكتساب العملاء 25%</div>
+      </div>
+      <div class="achieve-card">
+        <span class="achieve-icon">🔄</span>
+        <div class="achieve-num">10%</div>
+        <div class="achieve-title" data-ar="تقليل دوران العمالة" data-en="Turnover Reduction">تقليل دوران العمالة</div>
+        <div class="achieve-desc" data-ar="مبادرات تخطيط القوى العاملة أسفرت عن تقليل معدل دوران العمالة 10%" data-en="Workforce planning initiatives resulted in a 10% reduction in employee turnover">مبادرات تخطيط القوى العاملة أسفرت عن تقليل معدل دوران العمالة 10%</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ CERTS ══════════════ -->
+<section class="certs-section" id="certs">
+  <div class="container">
+    <div class="section-label" data-ar="التطوير المهني" data-en="Professional Development">التطوير المهني</div>
+    <h2 class="section-title" data-ar-html="الشهادات <span>والدورات</span>" data-en-html="Certifications <span>&amp; Courses</span>">الشهادات <span>والدورات</span></h2>
+    <p class="section-sub" data-ar="8 شهادات احترافية تعكس التزاماً حقيقياً بالتطوير المستمر" data-en="8 professional certifications reflecting a real commitment to continuous development">8 شهادات احترافية تعكس التزاماً حقيقياً بالتطوير المستمر</p>
+
+    <div class="certs-grid">
+      <div class="cert-card"><div class="cert-icon">📊</div><div><div class="cert-name" data-ar="مهارات المبيعات" data-en="Sales Skills">مهارات المبيعات</div><div class="cert-date" data-ar="أبريل 2024" data-en="April 2024">أبريل 2024</div></div></div>
+      <div class="cert-card"><div class="cert-icon">📅</div><div><div class="cert-name" data-ar="دورة التخطيط" data-en="Planning Course">دورة التخطيط</div><div class="cert-date" data-ar="أغسطس 2024" data-en="August 2024">أغسطس 2024</div></div></div>
+      <div class="cert-card"><div class="cert-icon">🤝</div><div><div class="cert-name" data-ar="مهارات التفاوض" data-en="Negotiation Skills">مهارات التفاوض</div><div class="cert-date" data-ar="أغسطس 2024" data-en="August 2024">أغسطس 2024</div></div></div>
+      <div class="cert-card"><div class="cert-icon">🧑‍💼</div><div><div class="cert-name" data-ar="الموارد البشرية HR" data-en="HR Course">الموارد البشرية HR</div><div class="cert-date" data-ar="ديسمبر 2022" data-en="December 2022">ديسمبر 2022</div></div></div>
+      <div class="cert-card"><div class="cert-icon">🌱</div><div><div class="cert-name" data-ar="التنمية البشرية" data-en="Human Development">التنمية البشرية</div><div class="cert-date" data-ar="أكتوبر 2022" data-en="October 2022">أكتوبر 2022</div></div></div>
+      <div class="cert-card"><div class="cert-icon">⏱️</div><div><div class="cert-name" data-ar="إدارة الوقت والمهام" data-en="Time & Task Management">إدارة الوقت والمهام</div><div class="cert-date" data-ar="سبتمبر 2022" data-en="September 2022">سبتمبر 2022</div></div></div>
+      <div class="cert-card"><div class="cert-icon">🎤</div><div><div class="cert-name" data-ar="مهارات العرض والتقديم" data-en="Presentation Skills">مهارات العرض والتقديم</div><div class="cert-date" data-ar="سبتمبر 2022" data-en="September 2022">سبتمبر 2022</div></div></div>
+      <div class="cert-card"><div class="cert-icon">💻</div><div><div class="cert-name">Microsoft Office</div><div class="cert-date" data-ar="يوليو 2022" data-en="July 2022">يوليو 2022</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ CONTACT ══════════════ -->
+<section class="contact-section" id="contact">
+  <div class="container">
+    <div class="contact-inner">
+      <div class="section-label" style="justify-content:center" data-ar="تواصل معي" data-en="Get In Touch">تواصل معي</div>
+      <h2 class="section-title" data-ar-html="جاهز لفرصة <span>جديدة</span>" data-en-html="Ready for a <span>New</span> Opportunity">جاهز لفرصة <span>جديدة</span></h2>
+      <p class="section-sub" style="margin:0 auto 0" data-ar="متاح لفرص في مجال التمثيل الطبي والمبيعات الصيدلانية. تواصل معي وسأرد في أقرب وقت." data-en="Available for opportunities in medical representation and pharmaceutical sales. Reach out and I'll respond as soon as possible.">
+        متاح لفرص في مجال التمثيل الطبي والمبيعات الصيدلانية. تواصل معي وسأرد في أقرب وقت.
+      </p>
+      <div class="contact-grid">
+        <a href="tel:+201276388372" class="contact-card">
+          <div class="c-icon">📞</div>
+          <div class="c-label" data-ar="هاتف" data-en="Phone">هاتف</div>
+          <div class="c-val">+20 127 638 8372</div>
+        </a>
+        <a href="https://wa.me/201276388372" class="contact-card" target="_blank">
+          <div class="c-icon">💬</div>
+          <div class="c-label">WhatsApp</div>
+          <div class="c-val" data-ar="تواصل الآن" data-en="Message Now">تواصل الآن</div>
+        </a>
+        <a href="mailto:hossamnaseralla20@gmail.com" class="contact-card">
+          <div class="c-icon">📧</div>
+          <div class="c-label" data-ar="إيميل" data-en="Email">إيميل</div>
+          <div class="c-val">hossamnaseralla20@gmail.com</div>
+        </a>
+        <a href="https://www.linkedin.com/in/hossamnaseralla" class="contact-card" target="_blank">
+          <div class="c-icon">🔗</div>
+          <div class="c-label">LinkedIn</div>
+          <div class="c-val" data-ar="الملف الشخصي" data-en="View Profile">الملف الشخصي</div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p data-ar="© 2025 حسام نصرالله — مندوب طبي محترف | الزقازيق، مصر" data-en="© 2025 Hossam Nasrallah — Professional Medical Representative | Zagazig, Egypt">© 2025 حسام نصرالله — مندوب طبي محترف | الزقازيق، مصر</p>
+</footer>
+
+<script>
+// LANGUAGE TOGGLE
+function setLang(lang){
+  const isEn = lang === 'en';
+  document.documentElement.lang = isEn ? 'en' : 'ar';
+  document.documentElement.dir = isEn ? 'ltr' : 'rtl';
+  document.body.classList.toggle('lang-en', isEn);
+  document.getElementById('btnAr').classList.toggle('active', !isEn);
+  document.getElementById('btnEn').classList.toggle('active', isEn);
+
+  document.querySelectorAll('[data-ar-html]').forEach(el=>{
+    el.innerHTML = isEn ? el.getAttribute('data-en-html') : el.getAttribute('data-ar-html');
+  });
+  document.querySelectorAll('[data-ar]:not([data-ar-html])').forEach(el=>{
+    el.textContent = isEn ? el.getAttribute('data-en') : el.getAttribute('data-ar');
+  });
+}
+document.getElementById('btnAr').addEventListener('click',()=>setLang('ar'));
+document.getElementById('btnEn').addEventListener('click',()=>setLang('en'));
+
+// NAV scroll effect
+const navbar=document.getElementById('navbar');
+window.addEventListener('scroll',()=>{
+  navbar.classList.toggle('scrolled',window.scrollY>50);
+});
+
+// Hamburger
+const hamburger=document.getElementById('hamburger');
+const navMenu=document.getElementById('navMenu');
+hamburger.addEventListener('click',()=>{
+  hamburger.classList.toggle('open');
+  navMenu.classList.toggle('open');
+});
+navMenu.querySelectorAll('a').forEach(l=>l.addEventListener('click',()=>{
+  hamburger.classList.remove('open');
+  navMenu.classList.remove('open');
+}));
+
+// Scroll reveal - timeline & achieve cards
+const revealEls=document.querySelectorAll('.timeline-item,.achieve-card');
+const io=new IntersectionObserver((entries)=>{
+  entries.forEach((e,i)=>{
+    if(e.isIntersecting){
+      setTimeout(()=>e.target.classList.add('visible'),i*80);
+      io.unobserve(e.target);
+    }
+  });
+},{threshold:0.1});
+revealEls.forEach(el=>io.observe(el));
+
+// Language bars animate on scroll
+const barIo=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.querySelectorAll('.lang-fill').forEach(bar=>{
+        bar.style.width=bar.dataset.w;
+      });
+      barIo.unobserve(e.target);
+    }
+  });
+},{threshold:0.3});
+document.querySelectorAll('.skill-group').forEach(g=>barIo.observe(g));
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'})}
+  });
+});
+
+// Counter animation for stat numbers
+const counterEls=document.querySelectorAll('.achieve-num');
+const counterIo=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const el=e.target;
+      const txt=el.textContent.trim();
+      const num=parseFloat(txt.replace(/[^0-9.]/g,''));
+      const suffix=txt.replace(/[0-9.]/g,'');
+      if(!isNaN(num)&&num>0){
+        let start=0;const dur=1200;const step=16;
+        const inc=num/(dur/step);
+        const t=setInterval(()=>{
+          start+=inc;
+          if(start>=num){start=num;clearInterval(t)}
+          el.textContent=(Number.isInteger(num)?Math.round(start):start.toFixed(0))+suffix;
+        },step);
+      }
+      counterIo.unobserve(el);
+    }
+  });
+},{threshold:0.5});
+counterEls.forEach(el=>counterIo.observe(el));
+</script>
+</body>
+</html>
